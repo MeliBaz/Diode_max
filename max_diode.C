@@ -109,13 +109,13 @@ void max_diode(){
    std::cout << "Minimum: f(" << xs[0] << "," << xs[1] << "): "
              << minimum->MinValue()  <<" Min value "<<v_min <<" Iterations "<<measurement2<<std::endl;
 
-TH2D *surfacePlot=dth;
-TCanvas *c1=new TCanvas();
-surfacePlot->Draw("pcolz");
+ TH2D *surfacePlot=dth;
+ TCanvas *c1=new TCanvas();
+ surfacePlot->Draw("pcolz");
  pathGraph->SetMarkerStyle(20);
  pathGraph->SetMarkerSize(0.5);
  pathGraph->SetMarkerColor(kBlack);
-pathGraph->Draw("LP");
+ pathGraph->Draw("LP");
 
 
 }
