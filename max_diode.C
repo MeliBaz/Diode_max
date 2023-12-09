@@ -1,29 +1,3 @@
-void maxPosition1(double x_scan, double y_scan, double step, TH2D *dth, double &max_value, double &max_position_x, double &max_position_y, int &measurements)
-{
-    double temp;
-    double min_value = 1;
-    max_value = 0;
-    for (double dx = -x_scan / 2.; dx < x_scan / 2.; dx += step)
-    {
-        for (double dy = -y_scan / 2.; dy < y_scan / 2.; dy += step)
-        {
-            measurements++;
-            Int_t bin = dth->FindBin(dx, dy);
-            double value = dth->GetBinContent(bin);
-            temp = value;
-
-            if (temp < min_value)
-                min_value = temp;
-            if (temp > max_value)
-            {
-                max_value = temp;
-                max_position_x = dx;
-                max_position_y = dy;
-            }
-        }
-    }
-}
-
  TH2D *dth;
  int measurement2=-1;
  TGraph *pathGraph=new TGraph();
@@ -41,7 +15,7 @@ double Function(const double *xx )
   return fabs(v*v);
 }
 void max_diode(){
-
+   //Plotting a function which mimics the distribution of laser intensity on a diode
    TCanvas *c = new TCanvas("c","Graph2D example",0,0,600,400);
    Double_t x, y, z, P = 4.;
    Int_t np = 1200;
@@ -74,9 +48,7 @@ void max_diode(){
    double step=1;
    double max_value, max_position_x, max_position_y;
    int measurements= 0;
-   maxPosition1(x_scan,y_scan,step,dth,max_value,max_position_x,max_position_y,measurements);
-   cout<<measurements<<" Max_value "<<max_value<<" Maximum position x "<<max_position_x<<" Maximum position y "<< max_position_y<<endl;
-   
+
    ROOT::Math::Minimizer* minimum =
       ROOT::Math::Factory::CreateMinimizer("Minuit2","Simplex");
    
