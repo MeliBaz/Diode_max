@@ -1,4 +1,4 @@
-void method(){ 
+void method_4points(){ 
 Double_t P = 6.; 
 Int_t np = 1200; 
 Double_t start_scan = 0; 
@@ -10,9 +10,9 @@ vector<double>positions_x;
 vector<double>positions_y;
 Double_t max_value;
 int iteration;
+//Plotting a function which mimics the distribution of laser intensity on a diode
 TCanvas *c = new TCanvas("c", "Graph2D example", 0, 0, 600, 400);
 TGraph2D *dt = new TGraph2D();
-
 TRandom *r = new TRandom();
 for (Int_t N = 0; N < np; N++) {
     Double_t x = 2 * P * (r->Rndm(N)) - P;
@@ -25,7 +25,6 @@ dt->SetNpx(100);
 dt->SetNpy(100);
 dt->SetTitle(" ;x; y");
 //dt->Draw("colzp");
-
 auto dth = dt->GetHistogram();
 double max=dth->GetMaximum();
 double min=dth->GetMinimum();
@@ -34,6 +33,7 @@ TGraph *pathGraph = new TGraph();
 pathGraph->SetMarkerStyle(20);
 pathGraph->SetMarkerSize(0.5);
 pathGraph->SetMarkerColor(kBlack);
+    //Selecting the starting point, either using the random function or specifying a particular value.
     double random_x=2.5;
     double random_y=-2;
     //int random_x = start_scan + (x_scan - start_scan) * gRandom->Rndm();
@@ -41,22 +41,24 @@ pathGraph->SetMarkerColor(kBlack);
     best_x = random_x;
     best_y = random_y;
     cout<<"random_x "<<random_x<<" random_y "<<random_y<<endl;
+    //Finding the function value based on the laser position, i.e., based on the x and y coordinates.
     best_value = dth->GetBinContent(dth->FindBin(best_x, best_y));
     
- int graphi=-1;
+int graphi=-1;
 for(iteration=0;iteration<30;iteration++) {
+    //Finding four points in the vicinity of the test point.
       for (int i = 0; i < 4; i++) {
          new_x = best_x + (gRandom->Rndm() - 0.5);
          new_y = best_y + (gRandom->Rndm() - 0.5);
-        new_value = dth->GetBinContent(dth->FindBin(new_x, new_y));
-        cout<<"new_x "<<new_x<<" new_y "<<new_y<<endl;
-        values.push_back(new_value);
-        positions_x.push_back(new_x);
-        positions_y.push_back(new_y);
+         new_value = dth->GetBinContent(dth->FindBin(new_x, new_y));
+         cout<<"new_x "<<new_x<<" new_y "<<new_y<<endl;
+         values.push_back(new_value);
+         positions_x.push_back(new_x);
+         positions_y.push_back(new_y);
 
     }
         
-      
+        //Finding the maximum among four points located in the vicinity of the test point
         max_value=values[0];
         max_x=positions_x[0];
         max_y=positions_y[0];
@@ -66,11 +68,10 @@ for(iteration=0;iteration<30;iteration++) {
                  max_value = values[i];  
                  max_x=positions_x[i];
                  max_y=positions_y[i];
-                
-     
         }
 
         }
+        //Assigning a new value to the maximum if the maximum point among the four points is greater than the test point.
         cout<<" "<<max_value<<" max_x "<<max_x<<" max_y "<<max_y<<endl; 
         if (max_value > best_value) {
             best_x = max_x;
@@ -79,7 +80,7 @@ for(iteration=0;iteration<30;iteration++) {
             pathGraph->SetPoint(++graphi, best_x, best_y);
         }
     
-    
+   //Stopping condition for the algorithm 
    if (max_value!=best_value && fabs(max_value - best_value) < 0.001) {
         break;
     }
