@@ -10,7 +10,6 @@ void maxPosition1(double x_scan, double y_scan, double step, TH2D *dth, double &
             measurements++;
             Int_t bin = dth->FindBin(dx, dy);
             double value = dth->GetBinContent(bin);
-            //cout<<value<<endl;
             temp = value;
 
             if (temp < min_value)
@@ -70,8 +69,6 @@ void max_diode(){
    dth->GetBinXYZ(max_bin, bin_x,bin_y, bin_z); 
    double max_x=dth->GetXaxis()->GetBinCenter(bin_x);
    double max_y=dth->GetYaxis()->GetBinCenter(bin_y);
-   
-   //cout<<"Max x "<<max_x<<" Max y "<<max_y<<" Max "<<max<<endl;
    double x_scan=10;
    double y_scan=10;
    double step=1;
