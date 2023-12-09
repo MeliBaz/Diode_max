@@ -41,7 +41,7 @@ double Function(const double *xx )
   pathGraph->SetPoint(measurement2,x,y);
   return fabs(v*v);
 }
-void max_diode1(){
+void max_diode(){
 
    TCanvas *c = new TCanvas("c","Graph2D example",0,0,600,400);
    Double_t x, y, z, P = 4.;
