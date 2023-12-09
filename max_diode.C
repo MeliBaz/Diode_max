@@ -37,18 +37,14 @@ void max_diode(){
  
    dth= dt->GetHistogram();
    dth->Draw("colzp");
+  //Finding the maximum value to compare with the obtained value 
    double max=dth->GetMaximum();
    double max_bin=dth->GetMaximumBin();
    int bin_x,bin_z,bin_y;
    dth->GetBinXYZ(max_bin, bin_x,bin_y, bin_z); 
    double max_x=dth->GetXaxis()->GetBinCenter(bin_x);
    double max_y=dth->GetYaxis()->GetBinCenter(bin_y);
-   double x_scan=10;
-   double y_scan=10;
-   double step=1;
-   double max_value, max_position_x, max_position_y;
-   int measurements= 0;
-
+//Applying Minuit2 library
    ROOT::Math::Minimizer* minimum =
       ROOT::Math::Factory::CreateMinimizer("Minuit2","Simplex");
    
